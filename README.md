@@ -1,64 +1,22 @@
-
 "use client";
-import { useState } from "react";
 
-const ContactForm = ({ onAdd }) => {
-    const [form, setForm] = useState({ nome: "", email: "", telefone: "" });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (!form.nome.trim()) return;
-        onAdd({ ...form, id: Date.now() });
-        setForm({ nome: "", email: "", telefone: "" });
-    };
-
+const ContactItem = ({ contact, onRemove }) => {
     return (
-        <form onSubmit={handleSubmit} className="bg-white shadow rounded p-4 space-y-4">
+        <li className="p-4 flex items-center justify-between">
             <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700">Nome</label>
-                <input
-                    name="nome"
-                    className="w-full border rounded px-3 py-2 text-gray-900"
-                    value={form.nome}
-                    onChange={handleChange}
-                    required
-                />
+                <p className="font-medium text-gray-900">{contact.nome}</p>
+                <p className="text-sm text-gray-600">
+                    {contact.email} • {contact.telefone}
+                </p>
             </div>
-
-            <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700">Email</label>
-                <input
-                    name="email"
-                    type="email"
-                    className="w-full border rounded px-3 py-2 text-gray-900"
-                    value={form.email}
-                    onChange={handleChange}
-                />
-            </div>
-
-            <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700">Telefone</label>
-                <input
-                    name="telefone"
-                    className="w-full border rounded px-3 py-2 text-gray-900"
-                    value={form.telefone}
-                    onChange={handleChange}
-                />
-            </div>
-
             <button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+                onClick={() => onRemove(contact.id)}
+                className="text-red-600 hover:text-red-700 px-2 py-1 rounded"
             >
-                Adicionar Contato
+                Excluir
             </button>
-        </form>
+        </li>
     );
 };
 
-export default ContactForm;
+export default ContactItem;
