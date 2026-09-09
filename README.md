@@ -1,22 +1,22 @@
-"use client";
+import ContactItem from "./ContactItem";
 
-const ContactItem = ({ contact, onRemove }) => {
+const ContactList = ({ items, onRemove }) => {
     return (
-        <li className="p-4 flex items-center justify-between">
-            <div>
-                <p className="font-medium text-gray-900">{contact.nome}</p>
-                <p className="text-sm text-gray-600">
-                    {contact.email} • {contact.telefone}
-                </p>
+        <section className="bg-white shadow rounded">
+            <div className="px-4 py-3 border-b">
+                <h2 className="font-medium text-gray-900">Contatos ({items.length})</h2>
             </div>
-            <button
-                onClick={() => onRemove(contact.id)}
-                className="text-red-600 hover:text-red-700 px-2 py-1 rounded"
-            >
-                Excluir
-            </button>
-        </li>
+            <ul className="divide-y">
+                {items.length === 0 ? (
+                    <li className="p-4 text-gray-500">Nenhum contato encontrado</li>
+                ) : (
+                    items.map((contact) => (
+                        <ContactItem key={contact.id} contact={contact} onRemove={onRemove} />
+                    ))
+                )}
+            </ul>
+        </section>
     );
 };
 
-export default ContactItem;
+export default ContactList;
